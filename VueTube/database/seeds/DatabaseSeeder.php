@@ -41,11 +41,11 @@ class DatabaseSeeder extends Seeder
         
 
         // Añadimos 10000 subscripciones a los canales.
-        factory(Subscription::class, 10000)->create([
+        factory(Subscription::class, 100)->create([
             'channel_id' => $channel1->id
         ]);
 
-        factory(Subscription::class, 10000)->create([
+        factory(Subscription::class, 100)->create([
             'channel_id' => $channel2->id
         ]);
     }

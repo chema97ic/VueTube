@@ -50346,7 +50346,8 @@ Vue.component('channel-uploads', {
   data: function data() {
     return {
       selected: false,
-      videos: []
+      videos: [],
+      progress: {}
     };
   },
   methods: {
@@ -50357,12 +50358,19 @@ Vue.component('channel-uploads', {
       this.videos = Array.from(this.$refs.videos.files);
       var uploaders = this.videos.map(function (video) {
         var form = new FormData();
+        _this.progress[video.name] = 0;
         form.append('video', video);
         form.append('title', video.name);
         var headers = {
           'Content-Type': 'application/x-www-form-urlencoded'
         };
-        return axios.post("/channels/".concat(_this.channel.id, "/videos"), form);
+        return axios.post("/channels/".concat(_this.channel.id, "/videos"), form, {
+          onUploadProgress: function onUploadProgress(event) {
+            _this.progress[video.name] = Math.ceil(event.loaded / event.total * 100);
+
+            _this.$forceUpdate();
+          }
+        });
       });
     }
   }

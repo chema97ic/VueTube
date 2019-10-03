@@ -8,6 +8,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Vuetube\Video;
+use FFMpeg\Format\Video\X264;
+use FFMpeg;
 
 class ConvertForStreaming implements ShouldQueue
 {
@@ -32,6 +34,18 @@ class ConvertForStreaming implements ShouldQueue
      */
     public function handle()
     {
-        echo 'converted';
+        $low = (new X264('aac'))->setKiloBitrate(100); //360p
+
+        $med = (new X264('aac'))->setKiloBitrate(250);
+
+        $high = (new X264('aac'))->setKiloBitrate(500);
+
+        FFMpeg::fromDisk('local')
+        ->open($this->video->path) //Cogemos la ruta
+        ->exportForHLS() //Convertimos el video par streaming
+        ->addFormat($low) //Lo convertimos a las 3 distintas calidades
+        ->addFormat($med)
+        ->addFormat($high)
+        ->save("public/videos/{$this->video->id}/{$this->video->id}.m3u8"); //m3u8 es la extension para el formato stremeable
     }
 }

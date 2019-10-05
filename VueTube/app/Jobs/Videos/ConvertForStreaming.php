@@ -42,7 +42,12 @@ class ConvertForStreaming implements ShouldQueue
 
         FFMpeg::fromDisk('local')
         ->open($this->video->path) //Cogemos la ruta
-        ->exportForHLS() //Convertimos el video par streaming
+        ->exportForHLS() //Convertimos el video para streaming
+        ->onProgress(function ($percentage) {
+            $this->video->update([
+                'percentage' => $percentage
+            ]);
+        }) //trackeamos el progreso y lo actualizamos en la base de datos.
         ->addFormat($low) //Lo convertimos a las 3 distintas calidades
         ->addFormat($med)
         ->addFormat($high)

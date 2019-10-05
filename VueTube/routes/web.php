@@ -21,6 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('channels', 'ChannelController');
 
+Route::get('videos/{video}', 'VideoController@show');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('channels/{channel}/videos', 'UploadVideoController@index')->name('channels.upload');
 

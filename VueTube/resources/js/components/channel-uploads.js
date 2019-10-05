@@ -9,8 +9,10 @@ Vue.component('channel-uploads', {
     
     data: () => ({
         selected: false,
-        videos: [],
-        progress: {}
+        videos: [], //array de videos
+        progress: {}, //progreso de subida
+        uploads: [], //array de subida
+        intervals: {} 
     }),
 
     methods: {
@@ -31,9 +33,38 @@ Vue.component('channel-uploads', {
 
                         this.$forceUpdate();
                     }
+                }).then(({ data }) => {
+                    this.uploads = [
+                        ...this.uploads, //añadimos el video
+                        data
+                    ]
                 });
                 
             });
+
+            axios.all(uploaders)
+                .then(() => {
+                    this.videos = this.uploads
+
+                    this.videos.forEach(video => {
+                        this.intervals[video.id] = setInterval(() => {
+                            axios.get(`/videos/${video.id}`).then(({ data }) => {
+
+                                if (data.percentage === 100) {
+                                    clearInterval(this.intervals[video.id])
+                                }
+
+                                this.videos = this.videos.map(v => {
+                                if (v.id === data.id) {
+                                return data
+                                }
+
+                                return v
+                            })
+                        })
+                    }, 3000)
+                })
+            })
         }
     }
 });

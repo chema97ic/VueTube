@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Vuetube\Channel;
 use Vuetube\Subscription;
 use Vuetube\Jobs\Videos\ConvertForStreaming;
+use Vuetube\Jobs\Videos\CreateVideoThumbnail;
 
 class UploadVideoController extends Controller
 {
@@ -21,6 +22,8 @@ class UploadVideoController extends Controller
             'path' => request()->video->store("channels/{$channel->id}")
         ]);
         
+            $this->dispatch(new CreateVideoThumbnail($video));
+
         $this->dispatch(new ConvertForStreaming($video));
 
         return $video;

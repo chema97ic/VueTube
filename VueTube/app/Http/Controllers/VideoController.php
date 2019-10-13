@@ -8,6 +8,10 @@ use Vuetube\Video;
 class VideoController extends Controller
 {
     public function show(Video $video) {
-        return $video;
+        if(request()->wantsJson()) {
+            return $video;
+        }
+
+        return view('video', compact('video'));
     }
 }

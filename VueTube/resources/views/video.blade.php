@@ -22,11 +22,27 @@
 
 @section('styles')
     <link rel="stylesheet" href="https://vjs.zencdn.net/7.4.1/video-js.css">
+    <style>
+        .vjs-default-skin {
+            width: 100%;
+        }
+    </style>
 @endsection
 
 @section('scripts')
-<script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
+    <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
     <script>
-        videojs('video');
+        window.CURRENT_VIDEO = '{{ $video->id }}'
+        var player = videojs('video');
+
+        var viewLogged = false;
+
+        player.on('timeupdate', function () {
+            var percentagePlayed = Math.ceil(player.currentTime() / player.duration() * 100);
+            if(percentagePlayed > 10 && !viewLogged) {
+                axios.put("/videos/" + window.CURRENT_VIDEO);
+                viewLogged = true;
+            }
+        });
     </script>
 @endsection

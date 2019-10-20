@@ -40,13 +40,7 @@
                             </p>
 
                             <div class="text-center">
-                                <subscribe-button :channel="{{$channel}}" :initial-subscriptions='{{$channel->subscriptions}}' inline-template>
-                                    <button @click='toggleSubscription' class="btn btn-danger" type="button">
-                                        @{{owner ? '' : subscribed ? 'Suscrito' : 'Suscribirse'}} @{{count}} @{{owner ? 'Suscriptores' : ''}} 
-                                        <!--Cuando ponemos @ hace que blade no lo renderize y en su lugar llamamos al metodo subscribe
-                                                                                        de nuestro componente Vue-->
-                                    </button>
-                                </subscribe-button>
+                                <subscribe-button :channel="{{$channel}}" :initial-subscriptions='{{$channel->subscriptions}}' />
                             </div>
 
                         </div>

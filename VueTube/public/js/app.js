@@ -1743,6 +1743,104 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/subscribe-button.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/subscribe-button.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    channel: {
+      type: Object,
+      required: true,
+      "default": function _default() {
+        return {};
+      }
+    },
+    initialSubscriptions: {
+      type: Array,
+      required: true,
+      "default": function _default() {
+        return [];
+      }
+    }
+  },
+  data: function data() {
+    return {
+      subscriptions: this.initialSubscriptions
+    };
+  },
+  computed: {
+    subscribed: function subscribed() {
+      if (!__auth() || this.channel.user_id === __auth().id) return false;
+      return !!this.subscription;
+    },
+    owner: function owner() {
+      if (__auth() && this.channel.user_id === __auth().id) return true;
+      return false;
+    },
+    subscription: function subscription() {
+      if (!__auth()) return null;
+      return this.subscriptions.find(function (subscription) {
+        return subscription.user_id === __auth().id;
+      });
+    },
+    count: function count() {
+      return numeral__WEBPACK_IMPORTED_MODULE_0___default()(this.subscriptions.length).format('0a');
+    }
+  },
+  methods: {
+    toggleSubscription: function toggleSubscription() {
+      var _this = this;
+
+      if (!__auth()) {
+        return alert('Identificate para suscribirte.');
+      }
+
+      if (this.owner) {
+        return null;
+      }
+
+      if (this.subscribed) {
+        axios["delete"]("/channels/".concat(this.channel.id, "/subscriptions/").concat(this.subscription.id)).then(function () {
+          _this.subscriptions = _this.subscriptions.filter(function (s) {
+            return s.id !== _this.subscription.id;
+          });
+        });
+      } else {
+        axios.post("/channels/".concat(this.channel.id, "/subscriptions")).then(function (response) {
+          _this.subscriptions = [].concat(_toConsumableArray(_this.subscriptions), [response.data]);
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
 /*!*****************************************************!*\
   !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
@@ -38071,6 +38169,48 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/subscribe-button.vue?vue&type=template&id=39efd8e0&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/subscribe-button.vue?vue&type=template&id=39efd8e0& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "btn btn-danger",
+      attrs: { type: "button" },
+      on: { click: _vm.toggleSubscription }
+    },
+    [
+      _vm._v(
+        "\n     " +
+          _vm._s(_vm.owner ? "" : _vm.subscribed ? "Suscrito" : "Suscribirse") +
+          " " +
+          _vm._s(_vm.count) +
+          " " +
+          _vm._s(_vm.owner ? "Suscriptores" : "") +
+          " \n"
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -50218,8 +50358,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.config.ignoredElements = ['video-js'];
-
-__webpack_require__(/*! ./components/subscribe-button */ "./resources/js/components/subscribe-button.js");
+Vue.component('subscribe-button', __webpack_require__(/*! ./components/subscribe-button.vue */ "./resources/js/components/subscribe-button.vue")["default"]);
 
 __webpack_require__(/*! ./components/channel-uploads */ "./resources/js/components/channel-uploads.js");
 
@@ -50419,93 +50558,72 @@ Vue.component('channel-uploads', {
 
 /***/ }),
 
-/***/ "./resources/js/components/subscribe-button.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/subscribe-button.js ***!
-  \*****************************************************/
-/*! no exports provided */
+/***/ "./resources/js/components/subscribe-button.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/subscribe-button.vue ***!
+  \******************************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_0__);
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+/* harmony import */ var _subscribe_button_vue_vue_type_template_id_39efd8e0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./subscribe-button.vue?vue&type=template&id=39efd8e0& */ "./resources/js/components/subscribe-button.vue?vue&type=template&id=39efd8e0&");
+/* harmony import */ var _subscribe_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./subscribe-button.vue?vue&type=script&lang=js& */ "./resources/js/components/subscribe-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
-Vue.component('subscribe-button', {
-  props: {
-    channel: {
-      type: Object,
-      required: true,
-      "default": function _default() {
-        return {};
-      }
-    },
-    initialSubscriptions: {
-      type: Array,
-      required: true,
-      "default": function _default() {
-        return [];
-      }
-    }
-  },
-  data: function data() {
-    return {
-      subscriptions: this.initialSubscriptions
-    };
-  },
-  computed: {
-    subscribed: function subscribed() {
-      if (!__auth() || this.channel.user_id === __auth().id) return false;
-      return !!this.subscription;
-    },
-    owner: function owner() {
-      if (__auth() && this.channel.user_id === __auth().id) return true;
-      return false;
-    },
-    subscription: function subscription() {
-      if (!__auth()) return null;
-      return this.subscriptions.find(function (subscription) {
-        return subscription.user_id === __auth().id;
-      });
-    },
-    count: function count() {
-      return numeral__WEBPACK_IMPORTED_MODULE_0___default()(this.subscriptions.length).format('0a');
-    }
-  },
-  methods: {
-    toggleSubscription: function toggleSubscription() {
-      var _this = this;
 
-      if (!__auth()) {
-        return alert('Identificate para suscribirte.');
-      }
 
-      if (this.owner) {
-        return null;
-      }
 
-      if (this.subscribed) {
-        axios["delete"]("/channels/".concat(this.channel.id, "/subscriptions/").concat(this.subscription.id)).then(function () {
-          _this.subscriptions = _this.subscriptions.filter(function (s) {
-            return s.id !== _this.subscription.id;
-          });
-        });
-      } else {
-        axios.post("/channels/".concat(this.channel.id, "/subscriptions")).then(function (response) {
-          _this.subscriptions = [].concat(_toConsumableArray(_this.subscriptions), [response.data]);
-        });
-      }
-    }
-  }
-});
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _subscribe_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _subscribe_button_vue_vue_type_template_id_39efd8e0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _subscribe_button_vue_vue_type_template_id_39efd8e0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/subscribe-button.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/subscribe-button.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/subscribe-button.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_subscribe_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./subscribe-button.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/subscribe-button.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_subscribe_button_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/subscribe-button.vue?vue&type=template&id=39efd8e0&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/subscribe-button.vue?vue&type=template&id=39efd8e0& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_subscribe_button_vue_vue_type_template_id_39efd8e0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./subscribe-button.vue?vue&type=template&id=39efd8e0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/subscribe-button.vue?vue&type=template&id=39efd8e0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_subscribe_button_vue_vue_type_template_id_39efd8e0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_subscribe_button_vue_vue_type_template_id_39efd8e0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

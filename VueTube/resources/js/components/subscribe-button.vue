@@ -1,6 +1,16 @@
+<template>
+    <button @click='toggleSubscription' class="btn btn-danger" type="button">
+         {{owner ? '' : subscribed ? 'Suscrito' : 'Suscribirse'}} {{count}} {{owner ? 'Suscriptores' : ''}} 
+    <!--Cuando ponemos @ hace que blade no lo renderize y en su lugar llamamos al metodo subscribe
+    de nuestro componente Vue-->
+    </button>
+</template>
+
+<script>
 import numeral from 'numeral'
 
-Vue.component('subscribe-button', {
+export default {
+    
     props: {
         channel: {
             type: Object,
@@ -69,4 +79,6 @@ Vue.component('subscribe-button', {
             }
         }
     }
-})
+}
+</script>
+

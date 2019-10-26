@@ -21,7 +21,7 @@
             </g>
             </svg>
 
-            {{downvotes_count}}
+            {{upvotes_count}}
             <svg @click="vote('down')" class="thumbs-down" :class="{'thumbs-down-active': downvoted}" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                     width="475.092px" height="475.092px" viewBox="0 0 475.092 475.092" style="enable-background:new 0 0 475.092 475.092;"
                     xml:space="preserve">
@@ -54,7 +54,7 @@
                 </g>
         </svg>
 
-        {{upvotes_count}}
+        {{downvotes_count}}
 </div>
 </template>
 
@@ -69,7 +69,12 @@ export default {
         },
         entity_owner: {
             required: true,
-            default: () => ({})
+            default: () => ''
+        },
+
+        entity_id: {
+            required: true,
+            default: ''
         }
     },
 
@@ -109,6 +114,10 @@ export default {
 
     methods: {
         vote(type) {
+            if(! __auth()) {
+                return alert('Por favor identificate para publicar tu voto.')
+            }
+            
             if(__auth() && __auth().id === this.entity_owner) {
                 return alert('No puedes votar tus propios videos ni comentarios.')
             }
@@ -116,6 +125,22 @@ export default {
             if(type === 'up' && this.upvoted) return
 
             if(type === 'down' && this.downvoted) return
+
+            axios.post(`/votes/${this.entity_id}/${type}`).then(({data}) => {
+                if (this.upvoted || this.downvoted) {
+                    this.votes = this.votes.map(v => {
+                        if(v.user_id == __auth().id) {
+                            return data;
+                        } else {
+                            return v;
+                        }
+                    })
+                } else {
+                    this.votes = [
+                        ...this.votes, data
+                    ]
+                }
+            });
         }
     }
 }

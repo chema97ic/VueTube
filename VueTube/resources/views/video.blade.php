@@ -30,7 +30,7 @@
                             {{ $video->views }} views
                         </div>
 
-                    <votes :default_votes='{{ $video->votes}}' entity_owner="{{ $video->channel->user_id }}"></votes>
+                    <votes :default_votes='{{ $video->votes}}' entity_owner="{{ $video->channel->user_id }}" entity_id="{{$video->id}}"></votes>
                     </div>
                     <hr>
 

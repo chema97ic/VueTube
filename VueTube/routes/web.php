@@ -32,5 +32,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('channels/{channel}/videos', 'UploadVideoController@store');
 
+    Route::post('votes/{video}/{type}', 'VoteController@vote');
+
     Route::resource('channels/{channel}/subscriptions', 'SubscriptionController')->only(['store', 'destroy']);
 });

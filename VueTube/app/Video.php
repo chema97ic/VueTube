@@ -17,4 +17,8 @@ class Video extends Model
     public function votes() {
         return $this->morphMany(Vote::class, 'voteable');
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class)->whereNull('comment_id'); //si no es null comment_id, entonces es una respuesta a un comentario.
+    }
 }

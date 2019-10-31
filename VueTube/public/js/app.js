@@ -1808,7 +1808,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/videos/".concat(this.video.id, "/comments")).then(function (_ref) {
         var data = _ref.data;
-        _this.comments = data; //console.log(this.comments.data[0].user.name);
+        _this.comments = data;
       });
     }
   }
@@ -38441,13 +38441,15 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("div", { staticClass: "media-body" }, [
-          _c("h6", { staticClass: "mt-0" }, [
-            _vm._v(
-              "\n                " +
-                _vm._s(comment.user.name) +
-                "\n            "
-            )
-          ]),
+          comment.user
+            ? _c("h6", { staticClass: "mt-0" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(comment.user.name) +
+                    "\n            "
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("small", [_vm._v(_vm._s(comment.body))]),
           _vm._v(" "),

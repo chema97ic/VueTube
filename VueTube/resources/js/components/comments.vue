@@ -1,10 +1,10 @@
 <template>
     <div class="card mt-5 p-5">
-        <div class="media" v-for="(comment) of comments.data" v-bind:key="comment.comment">
+        <div class="media" v-for="comment of comments.data" v-bind:key="comment.comment">
             <img width="30" height="30" class="rounded-circle mr-3" src="https://picsum.photos/id/42/200/200">
 
             <div class="media-body">
-                <h6 class="mt-0">
+                <h6 class="mt-0" v-if="comment.user">
                     {{ comment.user.name }}
                 </h6>
                 <small>{{ comment.body }}</small>
@@ -44,19 +44,16 @@
             this.fetchComments()
         },
 
-        data(){
-            return {
-                comments: {
-                    data: []
-                }
+        data: () => ({
+            comments: {
+                data: []
             }
-        },
+        }),
 
         methods: {
             fetchComments() {
                 axios.get(`/videos/${this.video.id}/comments`).then(({data}) => {
                     this.comments = data
-                    //console.log(this.comments.data[0].user.name);
                 });
             }
         }

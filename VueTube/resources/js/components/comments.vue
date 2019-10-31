@@ -48,9 +48,7 @@
             return {
                 comments: {
                     data: []
-                },
-
-                user: {}
+                }
             }
         },
 

@@ -21,6 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('channels', 'ChannelController');
 
+Route::get('videos/{video}/comments', 'CommentController@index');
+
 Route::get('videos/{video}', 'VideoController@show');
 
 Route::put('videos/{video}', 'VideoController@updateViews');

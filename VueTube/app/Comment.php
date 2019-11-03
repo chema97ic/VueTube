@@ -9,8 +9,14 @@ class Comment extends Model
 {
     protected $with = ['user'];
 
+    protected $appends = ['repliesCount'];
+
     public function video() {
         return $this->belongstTo(Video::class);
+    }
+
+    public function getRepliesCountAttribute() {
+        return $this->replies->count();
     }
 
     public function user() {

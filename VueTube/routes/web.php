@@ -23,6 +23,8 @@ Route::resource('channels', 'ChannelController');
 
 Route::get('videos/{video}/comments', 'CommentController@index');
 
+Route::get('comments/{comment}/replies', 'CommentController@show');
+
 Route::get('videos/{video}', 'VideoController@show');
 
 Route::put('videos/{video}', 'VideoController@updateViews');

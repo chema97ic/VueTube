@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import numeral from 'numeral'
+import numeral from 'numeral';
 
 export default {
     

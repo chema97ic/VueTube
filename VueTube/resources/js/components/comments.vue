@@ -1,7 +1,9 @@
 <template>
     <div class="card mt-5 p-5">
         <div class="media" v-for="comment of comments.data" v-bind:key="comment.comment">
-            <img width="30" height="30" class="rounded-circle mr-3" src="https://picsum.photos/id/42/200/200">
+            <!--<img width="30" height="30" class="rounded-circle mr-3" src="https://picsum.photos/id/42/200/200">-->
+            
+            <avatar v-if="comment.user" :username="comment.user.name" :size="30" class="mr-3"></avatar>
 
             <div class="media-body">
                 <h6 class="mt-0" v-if="comment.user">
@@ -33,12 +35,23 @@
                 </div>
             </div>
         </div>
+
+        <div class="text-center">
+            <button class="btn btn-success">
+                Cargar más..
+            </button>
+        </div>
     </div>
 </template>
 
 <script>
+    import Avatar from 'vue-avatar';
     export default {
         props: ['video'],
+
+        components: {
+            Avatar
+        },
 
         mounted() {
             this.fetchComments()

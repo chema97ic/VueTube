@@ -32,11 +32,13 @@ Route::put('videos/{video}', 'VideoController@updateViews');
 Route::put('videos/{video}/update', 'VideoController@update')->middleware(['auth'])->name('videos.update');
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('comments/{video}', 'CommentController@store');
+
     Route::get('channels/{channel}/videos', 'UploadVideoController@index')->name('channels.upload');
 
     Route::post('channels/{channel}/videos', 'UploadVideoController@store');
 
-    Route::post('votes/{video}/{type}', 'VoteController@vote');
+    Route::post('votes/{entityId}/{type}', 'VoteController@vote');
 
     Route::resource('channels/{channel}/subscriptions', 'SubscriptionController')->only(['store', 'destroy']);
 });

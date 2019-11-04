@@ -1,8 +1,8 @@
 <template>
     <div class="card mt-5 p-5">
         <div class="form-inline my-4 w-full">
-                <input type="text" class="form-control form-control-sm w-80">
-                <button class="btn btn-sm btn-primary">
+                <input v-model="newComment" type="text" class="form-control form-control-sm w-80">
+                <button @click="addComment" class="btn btn-sm btn-primary">
                     <small>Add comment</small>
                 </button>
         </div>
@@ -17,7 +17,7 @@
                 </h6>
                 <small>{{ comment.body }}</small>
                 
-
+                <votes v-if="comment.user" :default_votes="comment.votes" :entity_id="comment.id" :entity_owner="comment.user.id"></votes>
                 <replies :comment="comment"></replies>
             </div>
         </div>
@@ -48,7 +48,9 @@
         data: () => ({
             comments: {
                 data: []
-            }
+            },
+
+            newComment: ''
         }),
 
         methods: {
@@ -63,6 +65,15 @@
                         ]
                     }
                 });
+            },
+            addComment() {
+                if(!this.newComment) return
+                
+                axios.post(`/comments/${this.video.id}`, {
+                    body: this.newComment
+                }).then(({data}) => {
+                    console.log(data)
+                })
             }
         }
     }

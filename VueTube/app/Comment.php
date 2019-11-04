@@ -4,12 +4,15 @@ namespace Vuetube;
 
 use Vuetube\Video;
 use Vuetube\User;
+use Vuetube\Vote;
 
 class Comment extends Model
 {
-    protected $with = ['user'];
+    protected $with = ['user', 'votes'];
 
     protected $appends = ['repliesCount'];
+
+    protected $fillable = ['body', "comment_id", "video_id"];
 
     public function video() {
         return $this->belongstTo(Video::class);
@@ -17,6 +20,10 @@ class Comment extends Model
 
     public function getRepliesCountAttribute() {
         return $this->replies->count();
+    }
+
+    public function votes() {
+        return $this->morphMany(Vote::class, 'voteable');
     }
 
     public function user() {

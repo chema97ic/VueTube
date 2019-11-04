@@ -6,13 +6,14 @@
                         <small>Add reply</small>
                     </button>
             </div>
-    <div class="media mt-3" v-for="reply in replies.data" :key="reply.reply">
+    <div class="media my-3" v-for="reply in replies.data" :key="reply.reply">
         <a class="mr-3" href="#">
             <avatar v-if="reply.user" :username="reply.user.name" :size="30" class="mr-3"></avatar>
         </a>
         <div class="media-body">
             <h6 class="mt-0" v-if="reply.user">{{reply.user.name}}</h6>
             <small >{{reply.body}}</small>
+            <votes v-if="reply.user" :default_votes="reply.votes" :entity_id="reply.id" :entity_owner="reply.user.id"></votes>
         </div>
         
     </div>

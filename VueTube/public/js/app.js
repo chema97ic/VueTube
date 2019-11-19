@@ -1779,6 +1779,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1789,6 +1792,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.fetchComments();
+  },
+  computed: {
+    auth: function auth() {
+      return __auth();
+    }
   },
   data: function data() {
     return {
@@ -1811,12 +1819,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     addComment: function addComment() {
+      var _this2 = this;
+
       if (!this.newComment) return;
       axios.post("/comments/".concat(this.video.id), {
         body: this.newComment
       }).then(function (_ref2) {
         var data = _ref2.data;
-        console.log(data);
+        _this2.comments = _objectSpread({}, _this2.comments, {
+          data: [data].concat(_toConsumableArray(_this2.comments.data))
+        });
       });
     }
   }
@@ -38553,38 +38565,40 @@ var render = function() {
     "div",
     { staticClass: "card mt-5 p-5" },
     [
-      _c("div", { staticClass: "form-inline my-4 w-full" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.newComment,
-              expression: "newComment"
-            }
-          ],
-          staticClass: "form-control form-control-sm w-80",
-          attrs: { type: "text" },
-          domProps: { value: _vm.newComment },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _vm.auth
+        ? _c("div", { staticClass: "form-inline my-4 w-full" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.newComment,
+                  expression: "newComment"
+                }
+              ],
+              staticClass: "form-control form-control-sm w-80",
+              attrs: { type: "text" },
+              domProps: { value: _vm.newComment },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.newComment = $event.target.value
+                }
               }
-              _vm.newComment = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-primary",
-            on: { click: _vm.addComment }
-          },
-          [_c("small", [_vm._v("Add comment")])]
-        )
-      ]),
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-primary ml-2",
+                on: { click: _vm.addComment }
+              },
+              [_c("small", [_vm._v("Añadir comentario")])]
+            )
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.comments.data, function(comment) {
         return _c(
@@ -38614,15 +38628,28 @@ var render = function() {
                 _vm._v(" "),
                 _c("small", [_vm._v(_vm._s(comment.body))]),
                 _vm._v(" "),
-                comment.user
-                  ? _c("votes", {
-                      attrs: {
-                        default_votes: comment.votes,
-                        entity_id: comment.id,
-                        entity_owner: comment.user.id
-                      }
-                    })
-                  : _vm._e(),
+                _c(
+                  "div",
+                  { staticClass: "d-flex" },
+                  [
+                    comment.user
+                      ? _c("votes", {
+                          attrs: {
+                            default_votes: comment.votes,
+                            entity_id: comment.id,
+                            entity_owner: comment.user.id
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      { staticClass: "btn btn-sm btn-default ml-2" },
+                      [_vm._v("Añadir respuesta")]
+                    )
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c("replies", { attrs: { comment: comment } })
               ],
@@ -38674,8 +38701,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._m(0),
-      _vm._v(" "),
       _vm._l(_vm.replies.data, function(reply) {
         return _c("div", { key: reply.reply, staticClass: "media my-3" }, [
           _c(
@@ -38735,23 +38760,7 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-inline my-4 w-full" }, [
-      _c("input", {
-        staticClass: "form-control form-control-sm w-80",
-        attrs: { type: "text" }
-      }),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-        _c("small", [_vm._v("Add reply")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

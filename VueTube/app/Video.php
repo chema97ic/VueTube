@@ -19,6 +19,6 @@ class Video extends Model
     }
 
     public function comments() {
-        return $this->hasMany(Comment::class)->whereNull('comment_id'); //si no es null comment_id, entonces es una respuesta a un comentario.
+        return $this->hasMany(Comment::class)->whereNull('comment_id')->orderBy('created_at', 'desc'); //si no es null comment_id, entonces es una respuesta a un comentario.
     }
 }

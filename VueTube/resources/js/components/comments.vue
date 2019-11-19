@@ -1,9 +1,9 @@
 <template>
     <div class="card mt-5 p-5">
-        <div class="form-inline my-4 w-full">
+        <div v-if="auth" class="form-inline my-4 w-full">
                 <input v-model="newComment" type="text" class="form-control form-control-sm w-80">
-                <button @click="addComment" class="btn btn-sm btn-primary">
-                    <small>Add comment</small>
+                <button @click="addComment" class="btn btn-sm btn-primary ml-2">
+                    <small>Añadir comentario</small>
                 </button>
         </div>
         <div class="media my-3" v-for="comment of comments.data" v-bind:key="comment.comment">
@@ -17,7 +17,10 @@
                 </h6>
                 <small>{{ comment.body }}</small>
                 
-                <votes v-if="comment.user" :default_votes="comment.votes" :entity_id="comment.id" :entity_owner="comment.user.id"></votes>
+                <div class="d-flex">
+                    <votes v-if="comment.user" :default_votes="comment.votes" :entity_id="comment.id" :entity_owner="comment.user.id"></votes>
+                    <button class="btn btn-sm btn-default ml-2">Añadir respuesta</button>
+                </div>
                 <replies :comment="comment"></replies>
             </div>
         </div>
@@ -43,6 +46,12 @@
 
         mounted() {
             this.fetchComments()
+        },
+
+        computed: {
+            auth() {
+                return __auth();
+            }
         },
 
         data: () => ({
@@ -72,7 +81,13 @@
                 axios.post(`/comments/${this.video.id}`, {
                     body: this.newComment
                 }).then(({data}) => {
-                    console.log(data)
+                    this.comments = {
+                        ...this.comments,
+                        data: [
+                            data,
+                            ...this.comments.data
+                        ]
+                    }
                 })
             }
         }

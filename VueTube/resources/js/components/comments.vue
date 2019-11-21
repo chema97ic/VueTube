@@ -6,42 +6,22 @@
                     <small>Añadir comentario</small>
                 </button>
         </div>
-        <div class="media my-3" v-for="comment of comments.data" v-bind:key="comment.comment">
-            <!--<img width="30" height="30" class="rounded-circle mr-3" src="https://picsum.photos/id/42/200/200">-->
-            
-            <avatar v-if="comment.user" :username="comment.user.name" :size="30" class="mr-3"></avatar>
-
-            <div class="media-body">
-                <h6 class="mt-0" v-if="comment.user">
-                    {{ comment.user.name }}
-                </h6>
-                <small>{{ comment.body }}</small>
-                
-                <div class="d-flex">
-                    <votes v-if="comment.user" :default_votes="comment.votes" :entity_id="comment.id" :entity_owner="comment.user.id"></votes>
-                    <button class="btn btn-sm btn-default ml-2">Añadir respuesta</button>
-                </div>
-                <replies :comment="comment"></replies>
-            </div>
-        </div>
-
+        <Comment v-for='comment in comments.data' :key="comment.id" :comment="comment"/>
         <div class="text-center">
             <button v-if="comments.next_page_url" @click="fetchComments" class="btn btn-success">
-                Cargar más..
+                Cargar más...
             </button>
         </div>
     </div>
 </template>
 
 <script>
-    import Avatar from 'vue-avatar';
-    import Replies from './replies.vue';
+    import Comment from './comment.vue';
     export default {
         props: ['video'],
 
         components: {
-            Avatar,
-            Replies
+            Comment
         },
 
         mounted() {

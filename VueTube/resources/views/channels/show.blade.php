@@ -83,6 +83,51 @@
                    @endif
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    Videos
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <th>Miniatura</th>
+                            <th>Titulo</th>
+                            <th>Visitas</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            @foreach($videos as $video)
+                                <tr>
+                                    <td>
+                                        <img width="40px" height="40px" src="{{ $video->thumbnail }}" alt="">
+                                    </td>
+                                    <td>
+                                    @if($video->percentage !== 100)
+                                        {{$video->title}}
+                                    @else
+                                        <a href="{{ route('videos.show', $video->id) }}">{{$video->title}}</a>
+                                    @endif
+                                    </td>
+                                    <td>
+                                        {{$video->views}}
+                                    </td>
+                                    <td>
+                                        {{$video->percentage === 100 ? "Subido" : "Procesando..."}}
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <div class="row justify-content-center">
+                        {{ $videos->links() }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

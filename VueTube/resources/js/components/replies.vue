@@ -49,6 +49,16 @@ export default {
                     ]
                 }
             });
+        },
+
+        addReply(reply) {
+            this.replies = {
+                ...this.replies,
+                data: [
+                    reply,
+                    ...this.replies.data
+                ]
+            }
         }
     }
 }

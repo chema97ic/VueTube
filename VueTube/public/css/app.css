@@ -10673,3 +10673,6 @@ a.text-dark:focus {
   align-content: center;
 }
 
+.zindex {
+  z-index: 2;
+}

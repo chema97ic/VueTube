@@ -10676,3 +10676,6 @@ a.text-dark:focus {
 .zindex {
   z-index: 2;
 }
+a>img {
+  width: 20px
+}

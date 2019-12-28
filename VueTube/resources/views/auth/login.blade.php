@@ -74,7 +74,7 @@
 			margin: 0;
 			padding: 0;
 			height: 100%;
-			background: #60a3bc !important;
+			
 		}
 		.user_card {
 			height: 400px;
@@ -98,7 +98,7 @@
 			width: 170px;
 			top: -75px;
 			border-radius: 50%;
-			background: #60a3bc;
+			
 			padding: 10px;
 			text-align: center;
 		}

@@ -3,9 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-header">Página principal</div>
+        <div class="col-md-12">
 
                 <div class="card-body">
                     @if (session('status'))
@@ -19,21 +17,13 @@
                     
                     
                 </div>
-                @if($channels->count() !== 0)
-                <div class="card">
-                        <div class="card-header">
+                @if(isset($channels) && $channels->count() !== 0)
+
+                        <div class="text-center">
                             Canales
                         </div>
                         <div class="card-body">
                             <table class="table">
-                                <thead>
-                                    <th>
-                                        Nombre
-                                    </th>
-                                    <th>
-
-                                    </th>
-                                </thead>
                                 <tbody>
                                     @foreach($channels as $channel)
                                         <tr>
@@ -52,45 +42,59 @@
                                 {{$channels->appends(request()->query())->links()}}
                             </div>
                         </div>
-                    </div>
+
                 @endif
 
-                @if($videos->count() !== 0)
-                <div class="card">
-                        <div class="card-header">
+                @if(isset($videos) && $videos->count() !== 0)
+                
+                        <div class="text-center">
                             Videos
                         </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <th>
-                                        Nombre
-                                    </th>
-                                    <th>
-
-                                    </th>
-                                </thead>
-                                <tbody>
+                        <hr>
+                        <div class="d-flex flex-wrap justify-content-around">
                                     @foreach($videos as $video)
-                                        <tr>
-                                            <td>
-                                                {{$video->title}}
-                                            </td>
-                                            <td>
-                                            <a href="{{route('videos.show', $video->id)}}" class="btn btn-sm btn-info">Visitar video</a>
-                                            </td>
-                                        </tr>
+                                    <a href="{{route('videos.show', $video->id)}}">
+                                        <div class="d-flex flex-column divwidth">
+                                            <img src="{{$video->thumbnail}}" alt="">
+                                            {{$video->title}}
+                                        </div>
+                                    </a>
+                                        
                                     @endforeach
-                                </tbody>
-                            </table>
-                            <div class="row justify-content-center">
-                                    {{ $videos->appends(request()->query())->links() }}
-                            </div>
+                            
                         </div>
-                    </div>
+                        <div class="row justify-content-center">
+                            {{ $videos->appends(request()->query())->links() }}
+                        </div>
+                    
                 @endif
-            </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('styles')
+<style>
+    body,
+	html {
+		margin: 0;
+		padding: 0;
+		height: 100%;
+		
+    }
+    div>img {
+        width: 250px;
+        height: 190px;
+    }
+    a {
+        color: black;
+        text-decoration: none;
+        font-size: 20px;
+    }
+
+    .divwidth {
+        max-width: 250px;
+        word-wrap: break-word;
+    }
+</style>
 @endsection

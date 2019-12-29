@@ -11,7 +11,7 @@
 
                     @method('PUT')
                 @endif
-                    <div class="card-header">{{$video->title}}</div>
+                    <div class="card-header"></div>
                 
                 <div class="card-body">
                     

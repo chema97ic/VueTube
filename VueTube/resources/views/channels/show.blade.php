@@ -7,8 +7,9 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     {{ $channel->name }}
-
+                @if($channel->editable())
                 <a href="{{ route('channels.upload', $channel->id) }}">Subir videos</a>
+                @endif
                 </div>
 
                 <div class="card-body">
@@ -116,7 +117,9 @@
                                         {{$video->percentage === 100 ? "Subido" : "Procesando..."}}
                                     </td>
                                     <td>
-                                        
+                                        @if($channel->editable())
+                                        <a class="btn btn-danger" style="cursor: pointer" href="{{ route('videos.delete', $video->id) }}">Borrar</a>  
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

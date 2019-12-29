@@ -85,6 +85,10 @@ class ChannelController extends Controller
             'description' => $request->description
         ]);
 
+        auth()->user()->update([
+            'name' => $request->name
+        ]);
+
         return redirect()->back();
     }
 

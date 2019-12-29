@@ -32,6 +32,8 @@ Route::put('videos/{video}/update', 'VideoController@update')->middleware(['auth
 Route::middleware(['auth'])->group(function () {
     Route::post('comments/{video}', 'CommentController@store');
 
+    Route::get('videos/{video}/delete', 'VideoController@delete')->name('videos.delete');
+
     Route::get('channels/{channel}/videos', 'UploadVideoController@index')->name('channels.upload');
 
     Route::post('channels/{channel}/videos', 'UploadVideoController@store');

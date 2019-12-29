@@ -27,4 +27,10 @@ class VideoController extends Controller
         
         return redirect()->back();
     }
+
+    public function delete(Video $video) {
+        $affectedRows = Video::where('id', '=', $video->id)->delete();
+        
+        return redirect()->back();
+    }
 }

@@ -17,11 +17,27 @@
                     
                     
                 </div>
-                @if(isset($channels) && $channels->count() !== 0)
-
-                        <div class="text-center">
-                            Canales
+                @if(isset($videos) && $videos->count() !== 0)
+                        <hr>
+                        <div class="d-flex flex-wrap">
+                                    @foreach($videos as $video)
+                                    <a href="{{route('videos.show', $video->id)}}">
+                                        <div class="d-flex flex-column divwidth mr-4 mb-5">
+                                            <img src="{{$video->thumbnail}}" alt="">
+                                            {{$video->title}}
+                                        <small>{{$video->views}} visitas | {{$allchannels->where('id', 'LIKE', "%{$video->channel_id}%")->first()->name}}</small>
+                                        </div>
+                                    </a>
+                                        
+                                    @endforeach
+                            
                         </div>
+                        <div class="row justify-content-center">
+                            {{ $videos->appends(request()->query())->links() }}
+                        </div>
+                    
+                @endif
+                @if(isset($channels) && $channels->count() !== 0)
                         <div class="card-body">
                             <table class="table">
                                 <tbody>
@@ -43,30 +59,6 @@
                             </div>
                         </div>
 
-                @endif
-
-                @if(isset($videos) && $videos->count() !== 0)
-                
-                        <div class="text-center">
-                            Videos
-                        </div>
-                        <hr>
-                        <div class="d-flex flex-wrap justify-content-around">
-                                    @foreach($videos as $video)
-                                    <a href="{{route('videos.show', $video->id)}}">
-                                        <div class="d-flex flex-column divwidth">
-                                            <img src="{{$video->thumbnail}}" alt="">
-                                            {{$video->title}}
-                                        </div>
-                                    </a>
-                                        
-                                    @endforeach
-                            
-                        </div>
-                        <div class="row justify-content-center">
-                            {{ $videos->appends(request()->query())->links() }}
-                        </div>
-                    
                 @endif
         </div>
     </div>

@@ -52,12 +52,17 @@
 
                     <div class="d-flex justify-content-between align-items-center mt-5">
                         <div class="media">
-                            <img class="rounded-circle" src="https://picsum.photos/id/42/200/200" width="50" height="50" class="mr-3" alt="...">
+                            
+                            @if($video->channel->image != null)
+                        <img class="rounded-circle" src="{{ $video->channel->image() }}" width="50" height="50" class="mr-3" alt="...">
+                            @else
+                                <avatarusuario :channelname="'{!! $video->channel->name !!}'"></avatarusuario>
+                            @endif
                             <div class="media-body ml-2">
                                 <h5 class="mt-0 mb-0">
                                     <a href="{{ route('channels.show', $video->channel->id) }}">{{ $video->channel->name }}</a>
                                 </h5>
-                                <span class="small">Published on {{ $video->created_at->toFormattedDateString() }}</span>
+                                <span class="small">Publicado en {{ $video->created_at->toFormattedDateString() }}</span>
                             </div>
                         </div>
 

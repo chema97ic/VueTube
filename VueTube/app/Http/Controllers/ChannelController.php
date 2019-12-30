@@ -78,6 +78,9 @@ class ChannelController extends Controller
         if ($request->hasFile('image')){
             $channel->clearMediaCollection('images');
             $channel->addMediaFromRequest('image')->toMediaCollection('images');
+            $channel->update([
+                'image' => $channel->image()
+            ]);
         }
 
         $channel->update([

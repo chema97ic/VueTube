@@ -27,7 +27,7 @@
 
                                 </div>
                                 @endif
-                                <img src="{{$channel->image()}}" alt="">
+                                <img src="{{$channel->image()}}" alt="" style="width: 100px; height: 100px">
                             </div>
                         </div>
 

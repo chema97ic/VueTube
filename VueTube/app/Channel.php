@@ -19,7 +19,7 @@ class Channel extends Model implements HasMedia
 
     public function image() {
         if($this->media->first()){
-        return $this->media->first()->getFullUrl('thumb');
+        return $this->media->first()->getFullUrl(); // añadir como parametro 'thumb para mostrar la conversion.'
         }
 
         return null;

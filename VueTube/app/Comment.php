@@ -5,21 +5,29 @@ namespace Vuetube;
 use Vuetube\Video;
 use Vuetube\User;
 use Vuetube\Vote;
+use Vuetube\Channel;
 
 class Comment extends Model
 {
     protected $with = ['user', 'votes'];
 
-    protected $appends = ['repliesCount'];
+    protected $appends = ['repliesCount', 'channelImage'];
 
     protected $fillable = ['body', "comment_id", "video_id"];
 
     public function video() {
-        return $this->belongstTo(Video::class);
+        return $this->belongsTo(Video::class);
     }
 
     public function getRepliesCountAttribute() {
         return $this->replies->count();
+    }
+    public function getChannelImageAttribute() {
+            try {
+                return $this->user->channel->image;
+            } catch (\Throwable $th) {
+                return;
+            }
     }
 
     public function votes() {

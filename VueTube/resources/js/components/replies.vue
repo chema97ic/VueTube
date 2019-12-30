@@ -3,7 +3,8 @@
     
     <div class="media my-3" v-for="reply in replies.data" :key="reply.reply">
         <a class="mr-3" href="#">
-            <avatar v-if="reply.user" :username="reply.user.name" :size="30" class="mr-3"></avatar>
+            <avatar v-if="reply.user && reply.channelImage == null" :username="reply.user.name" :size="30" class="mr-3"></avatar>
+            <img v-else :src="reply.channelImage" style="width:30px; height: 30px" class="rounded-circle mr-3"/>
         </a>
         <div class="media-body">
             <h6 class="mt-0" v-if="reply.user">{{reply.user.name}}</h6>

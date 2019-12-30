@@ -2,8 +2,8 @@
 <div>
     <div class="media my-3">
             <!--<img width="30" height="30" class="rounded-circle mr-3" src="https://picsum.photos/id/42/200/200">-->
-            
-            <avatar v-if="comment.user" :username="comment.user.name" :size="30" class="mr-3"></avatar>
+            <avatar v-if="comment.user && comment.channelImage == null" :username="comment.user.name" :size="30" class="mr-3"></avatar>
+            <img v-else :src="comment.channelImage" style="width:30px; height: 30px" class="rounded-circle mr-3"/>
 
             <div class="media-body">
                 <h6 class="mt-0" v-if="comment.user">
@@ -55,6 +55,7 @@ export default {
     },
     methods: {
         addReply() {
+            console.log(this.comment);
             if(!this.body) return
             axios.post(`/comments/${this.video.id}`, {
                 comment_id: this.comment.id,

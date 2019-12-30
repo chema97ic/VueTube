@@ -9,6 +9,7 @@ Vue.component('subscribe-button', require('./components/subscribe-button.vue').d
 Vue.component('votes', require('./components/votes.vue').default);
 Vue.component('comments', require('./components/comments.vue').default);
 Vue.component('comment', require('./components/comment.vue').default);
+Vue.component('avatarusuario', require('./components/avatarusuario.vue').default);
 require('./components/channel-uploads');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));

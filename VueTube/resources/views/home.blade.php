@@ -14,9 +14,41 @@
                     <form action="">
                         <input type="text" name="search" class="form-control" placeholder="Buscar vídeos y canales">
                     </form>
-                    
-                    
                 </div>
+                @if($queryFound == false)
+                    <div class="text-center" style="margin-bottom: 30px"> No se han encontrado resultados para esa busqueda.</div>
+                    <hr>
+                @endif
+                @if(auth()->check() && $videos->count() == 0 && $channels->count() == 0)
+                <div class="text-center" style="font-size: 30px; margin-bottom: 20px">Ultimos vídeos basados en tus suscripciones!</div>
+                <div class="d-flex flex-wrap">
+                        @foreach($videosFromSubscribedChannels as $video)
+                            <a href="{{route('videos.show', $video->id)}}">
+                                <div class="d-flex flex-column divwidth mr-4 mb-5">
+                                    <img src="{{$video->thumbnail}}" alt="">
+                                    {{$video->title}}
+                                <small>{{$video->views}} visitas | {{$video->channel->name}}</small>
+                                </div>
+                            </a>
+                        @endforeach
+                </div>
+                @endif
+
+                @if($videos->count() == 0 && $channels->count() == 0)
+                <div class="text-center" style="font-size: 30px; margin-bottom: 20px">Los vídeos mas vistos y populares!</div>
+                <div class="d-flex flex-wrap">
+                        @foreach($mostViewed as $video)
+                            <a href="{{route('videos.show', $video->id)}}">
+                                <div class="d-flex flex-column divwidth mr-4 mb-5">
+                                    <img src="{{$video->thumbnail}}" alt="">
+                                    {{$video->title}}
+                                <small>{{$video->views}} visitas | {{$video->channel->name}}</small>
+                                </div>
+                            </a>
+                        @endforeach
+                </div>
+                @endif
+
                 @if(isset($videos) && $videos->count() !== 0)
                         <hr>
                         <div class="d-flex flex-wrap">

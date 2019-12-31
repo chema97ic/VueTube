@@ -19,7 +19,7 @@
                     <div class="text-center" style="margin-bottom: 30px"> No se han encontrado resultados para esa busqueda.</div>
                     <hr>
                 @endif
-                @if(auth()->check() && $videos->count() == 0 && $channels->count() == 0)
+                @if(auth()->check() && $videos->count() == 0 && $channels->count() == 0 && $videosFromSubscribedChannels != null)
                 <div class="text-center" style="font-size: 30px; margin-bottom: 20px">Ultimos vídeos basados en tus suscripciones!</div>
                 <div class="d-flex flex-wrap">
                         @foreach($videosFromSubscribedChannels as $video)
@@ -75,7 +75,7 @@
                                 <tbody>
                                     @foreach($channels as $channel)
                                         <tr>
-                                            <td>
+                                            <td style="font-size: 20px">
                                                 {{$channel->name}}
                                             </td>
                                             <td>

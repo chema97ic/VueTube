@@ -42,7 +42,6 @@ class HomeController extends Controller
         $videosFromSubscribedChannels = array();
         if(auth()->check()){
             $subscriptions = Subscription::where('user_id', '=', auth()->user()->id)->get();
-            $i = 0;
             foreach ($subscriptions as $subscription) {
                 $subscriptionChannel = Channel::where('id', '=', $subscription->channel_id);
                 $channelVideos = Video::where('channel_id', '=', $subscriptionChannel->first()->id)->orderBy('created_at')->get()->reverse()->take(5);

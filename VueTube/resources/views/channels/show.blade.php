@@ -6,10 +6,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    {{ $channel->name }}
-                @if($channel->editable())
-                <a href="{{ route('channels.upload', $channel->id) }}">Subir videos</a>
-                @endif
                 </div>
 
                 <div class="card-body">
@@ -77,6 +73,9 @@
                             @endif
 
                             <button type="submit" class="btn btn-info">Actualizar ajustes</button>
+                            @if($channel->editable())
+                                <a class="btn btn-success float-right" href="{{ route('channels.upload', $channel->id) }}">Subir videos</a>
+                            @endif
                         @endif
 
                     @if($channel->editable())  

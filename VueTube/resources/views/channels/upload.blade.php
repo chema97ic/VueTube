@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid" id="app">
+<div class="container-fluid h-100" id="app">
     <div class="row justify-content-center">
     <channel-uploads :channel="{{ $channel }}" inline-template>
         <div class="col-md-8">
             
-            <div class="card p-3 d-flex justify-content-center align-items-center" v-if="!selected">
-                    <img onclick="document.getElementById('video-files').click()" width="70px" height="70px" src="https://img.icons8.com/ultraviolet/40/000000/upload.png">
+            <div class="p-3 flex-column d-flex justify-content-center align-items-center" v-if="!selected">
+                    <img onclick="document.getElementById('video-files').click()" width="200px" height="200px" src="https://img.icons8.com/ultraviolet/40/000000/upload.png">
                     <input type="file" multiple id="video-files" style="display: none" ref="videos" @change="upload">
-                    <p class="text-center">¡Clicka en el icono para subir tus videos!</p>
+                    <p class="text-center" style="font-size: 30px; color: orange; text-decoration: underline">¡Clicka en el icono para subir tus videos!</p>
             </div>
 
             <div class="card p-3" v-else>
@@ -42,4 +42,20 @@
         </channel-uploads>
     </div>
 </div>
+@endsection
+
+@section('styles')
+    <style>
+        body,html {
+            height: 100%
+        }
+        main {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            width:100%;
+        };
+    </style>
 @endsection
